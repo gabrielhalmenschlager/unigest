@@ -1,0 +1,10 @@
+{% extends 'estoque/base.html' %}
+{% block content %}
+<h4>Confirmar Exclusão</h4>
+<p>Tem certeza que deseja excluir o produto <strong>{{ produto.nome }}</strong>?</p>
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger">Confirmar</button>
+    <a href="{% url 'produto_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

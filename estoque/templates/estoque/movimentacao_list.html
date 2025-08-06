@@ -1,0 +1,26 @@
+{% extends 'estoque/base.html' %}
+{% block title %}Movimentações{% endblock %}
+{% block content %}
+<h4>Movimentações de Estoque</h4>
+<a href="{% url 'movimentacao_create' %}" class="btn btn-primary mb-3">Nova Movimentação</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Data</th><th>Produto</th><th>Tipo</th><th>Qtd</th><th>Responsável</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for m in movimentacoes %}
+        <tr>
+            <td>{{ m.data|date:"d/m/Y H:i" }}</td>
+            <td>{{ m.produto.nome }}</td>
+            <td>{{ m.get_tipo_display }}</td>
+            <td>{{ m.quantidade }}</td>
+            <td>{{ m.responsavel }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">Nenhuma movimentação registrada.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

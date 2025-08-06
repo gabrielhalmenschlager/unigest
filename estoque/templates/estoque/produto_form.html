@@ -1,0 +1,11 @@
+{% extends 'estoque/base.html' %}
+{% block title %}Cadastro de Produto{% endblock %}
+{% block content %}
+<h4>Cadastro de Produto</h4>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-success">Salvar</button>
+    <a href="{% url 'produto_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

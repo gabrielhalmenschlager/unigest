@@ -9,7 +9,7 @@ class ProdutoForm(forms.ModelForm):
 class MovimentacaoForm(forms.ModelForm):
     class Meta:
         model = Movimentacao
-        fields = ['produto', 'tipo', 'quantidade']
+        fields = ['produto', 'tipo', 'quantidade', 'responsavel']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -19,5 +19,6 @@ class MovimentacaoForm(forms.ModelForm):
 
         if tipo == 'saida' and produto and quantidade:
             if quantidade > produto.quantidade:
-                raise forms.ValidationError('Estoque insuficiente para esta saída.')
+                raise forms.ValidationError('Quantidade de saída maior que o estoque disponível.')
+
         return cleaned_data

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Projetos - Unigest{% endblock %}
+
+{% block content %}
+<h2>Projetos</h2>
+
+<a href="{% url 'tarefas:projeto-create' %}" class="btn btn-success mb-3">Novo Projeto</a>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Data Início</th>
+      <th>Data Término</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for projeto in projetos %}
+    <tr>
+      <td>{{ projeto.nome }}</td>
+      <td>{{ projeto.data_inicio }}</td>
+      <td>{{ projeto.data_termino }}</td>
+      <td>{{ projeto.get_status_display }}</td>
+      <td>
+        <a href="{% url 'tarefas:projeto-update' projeto.pk %}" class="btn btn-sm btn-primary">Editar</a>
+        <a href="{% url 'tarefas:projeto-delete' projeto.pk %}" class="btn btn-sm btn-danger">Excluir</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="text-center">Nenhum projeto cadastrado.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,10 +1,13 @@
-{% extends 'estoque/base.html' %}
+{% extends 'base.html' %}
+{% block title %}Excluir Produto - Unigest{% endblock %}
+
 {% block content %}
-<h4>Confirmar Exclusão</h4>
-<p>Tem certeza que deseja excluir o produto <strong>{{ produto.nome }}</strong>?</p>
+<h2>Excluir Produto</h2>
+<p>Tem certeza que deseja excluir o produto <strong>{{ object.nome }}</strong>?</p>
+
 <form method="post">
-    {% csrf_token %}
-    <button class="btn btn-danger">Confirmar</button>
-    <a href="{% url 'produto_list' %}" class="btn btn-secondary">Cancelar</a>
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Confirmar exclusão</button>
+  <a href="{% url 'estoque:produto-list' %}" class="btn btn-secondary">Cancelar</a>
 </form>
 {% endblock %}

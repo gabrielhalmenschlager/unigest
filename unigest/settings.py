@@ -27,22 +27,24 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    # apps Django padrão...
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'usuarios',
+
+    # seus apps
     'biblioteca',
     'cursos',
     'estoque',
     'tarefas',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,14 +58,16 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'unigest.urls'
 
+# Configuração dos templates, para buscar na pasta 'templates' raiz
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],  # pasta global templates/
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.request',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',  # importante para o login template
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -71,8 +75,16 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'unigest.wsgi.application'
 
+# Configurações de static files (css, js, imagens)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]  # onde colocar seus arquivos estáticos
+
+# Configuração para redirecionar após login
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

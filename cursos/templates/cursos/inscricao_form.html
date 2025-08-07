@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}{% if form.instance.pk %}Editar Inscrição{% else %}Nova Inscrição{% endif %} - Unigest{% endblock %}
+
+{% block content %}
+<h2>{% if form.instance.pk %}Editar Inscrição{% else %}Nova Inscrição{% endif %}</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Salvar</button>
+  <a href="{% url 'cursos:inscricao-list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

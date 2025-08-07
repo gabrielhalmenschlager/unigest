@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Excluir Tarefa - Unigest{% endblock %}
+
+{% block content %}
+<h2>Excluir Tarefa</h2>
+<p>Tem certeza que deseja excluir a tarefa <strong>{{ object.titulo }}</strong>?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Confirmar exclusão</button>
+  <a href="{% url 'tarefas:tarefa-list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

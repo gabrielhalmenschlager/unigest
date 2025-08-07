@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Excluir Movimentação - Unigest{% endblock %}
+
+{% block content %}
+<h2>Excluir Movimentação</h2>
+<p>Tem certeza que deseja excluir a movimentação do produto <strong>{{ object.produto.nome }}</strong> do tipo <strong>{{ object.get_tipo_display }}</strong>?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Confirmar exclusão</button>
+  <a href="{% url 'estoque:movimentacao-list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

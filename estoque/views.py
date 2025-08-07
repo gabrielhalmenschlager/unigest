@@ -1,60 +1,50 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Produto, Movimentacao
 from .forms import ProdutoForm, MovimentacaoForm
 
-@login_required
-def produto_list(request):
-    produtos = Produto.objects.all()
-    busca = request.GET.get('busca')
-    if busca:
-        produtos = produtos.filter(nome__icontains=busca)
-    return render(request, 'estoque/produto_list.html', {'produtos': produtos})
+class ProdutoListView(LoginRequiredMixin, ListView):
+    model = Produto
+    template_name = 'estoque/produto_list.html'
+    context_object_name = 'produtos'
 
-@login_required
-def produto_create(request):
-    form = ProdutoForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'Produto cadastrado com sucesso.')
-        return redirect('produto_list')
-    return render(request, 'estoque/produto_form.html', {'form': form})
+class ProdutoCreateView(LoginRequiredMixin, CreateView):
+    model = Produto
+    form_class = ProdutoForm
+    template_name = 'estoque/produto_form.html'
+    success_url = reverse_lazy('estoque:produto-list')
 
-@login_required
-def produto_update(request, pk):
-    produto = get_object_or_404(Produto, pk=pk)
-    form = ProdutoForm(request.POST or None, instance=produto)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'Produto atualizado com sucesso.')
-        return redirect('produto_list')
-    return render(request, 'estoque/produto_form.html', {'form': form})
+class ProdutoUpdateView(LoginRequiredMixin, UpdateView):
+    model = Produto
+    form_class = ProdutoForm
+    template_name = 'estoque/produto_form.html'
+    success_url = reverse_lazy('estoque:produto-list')
 
-@login_required
-def produto_delete(request, pk):
-    produto = get_object_or_404(Produto, pk=pk)
-    if request.method == 'POST':
-        produto.delete()
-        messages.success(request, 'Produto excluído com sucesso.')
-        return redirect('produto_list')
-    return render(request, 'estoque/produto_confirm_delete.html', {'produto': produto})
+class ProdutoDeleteView(LoginRequiredMixin, DeleteView):
+    model = Produto
+    template_name = 'estoque/produto_confirm_delete.html'
+    success_url = reverse_lazy('estoque:produto-list')
 
-@login_required
-def movimentacao_list(request):
-    movimentacoes = Movimentacao.objects.select_related('produto', 'responsavel').order_by('-data')
-    return render(request, 'estoque/movimentacao_list.html', {'movimentacoes': movimentacoes})
 
-@login_required
-def movimentacao_create(request):
-    form = MovimentacaoForm(request.POST or None)
-    if form.is_valid():
-        movimentacao = form.save(commit=False)
-        movimentacao.responsavel = request.user
-        try:
-            movimentacao.save()
-            messages.success(request, 'Movimentação registrada com sucesso.')
-            return redirect('movimentacao_list')
-        except ValueError as e:
-            messages.error(request, str(e))
-    return render(request, 'estoque/movimentacao_form.html', {'form': form})
+class MovimentacaoListView(LoginRequiredMixin, ListView):
+    model = Movimentacao
+    template_name = 'estoque/movimentacao_list.html'
+    context_object_name = 'movimentacoes'
+
+class MovimentacaoCreateView(LoginRequiredMixin, CreateView):
+    model = Movimentacao
+    form_class = MovimentacaoForm
+    template_name = 'estoque/movimentacao_form.html'
+    success_url = reverse_lazy('estoque:movimentacao-list')
+
+class MovimentacaoUpdateView(LoginRequiredMixin, UpdateView):
+    model = Movimentacao
+    form_class = MovimentacaoForm
+    template_name = 'estoque/movimentacao_form.html'
+    success_url = reverse_lazy('estoque:movimentacao-list')
+
+class MovimentacaoDeleteView(LoginRequiredMixin, DeleteView):
+    model = Movimentacao
+    template_name = 'estoque/movimentacao_confirm_delete.html'
+    success_url = reverse_lazy('estoque:movimentacao-list')

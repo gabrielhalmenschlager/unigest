@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Excluir Empréstimo - Unigest{% endblock %}
+
+{% block content %}
+<h2>Excluir Empréstimo</h2>
+<p>Tem certeza que deseja excluir o empréstimo do aluno <strong>{{ object.aluno }}</strong> para o livro <strong>{{ object.livro.titulo }}</strong>?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Confirmar exclusão</button>
+  <a href="{% url 'biblioteca:emprestimo-list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

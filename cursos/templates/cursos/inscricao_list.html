@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Inscrições - Unigest{% endblock %}
+
+{% block content %}
+<h2>Inscrições</h2>
+
+<a href="{% url 'cursos:inscricao-create' %}" class="btn btn-success mb-3">Nova Inscrição</a>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Aluno</th>
+      <th>Curso</th>
+      <th>Data Inscrição</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for inscricao in inscricoes %}
+    <tr>
+      <td>{{ inscricao.aluno }}</td>
+      <td>{{ inscricao.curso.nome }}</td>
+      <td>{{ inscricao.data_inscricao }}</td>
+      <td>{{ inscricao.get_status_display }}</td>
+      <td>
+        <a href="{% url 'cursos:inscricao-update' inscricao.pk %}" class="btn btn-sm btn-primary">Editar</a>
+        <a href="{% url 'cursos:inscricao-delete' inscricao.pk %}" class="btn btn-sm btn-danger">Excluir</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="text-center">Nenhuma inscrição cadastrada.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

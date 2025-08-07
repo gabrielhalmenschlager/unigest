@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Excluir Inscrição - Unigest{% endblock %}
+
+{% block content %}
+<h2>Excluir Inscrição</h2>
+<p>Tem certeza que deseja excluir a inscrição do aluno <strong>{{ object.aluno }}</strong> no curso <strong>{{ object.curso.nome }}</strong>?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-danger">Confirmar exclusão</button>
+  <a href="{% url 'cursos:inscricao-list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

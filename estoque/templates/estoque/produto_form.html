@@ -1,11 +1,13 @@
-{% extends 'estoque/base.html' %}
-{% block title %}Cadastro de Produto{% endblock %}
+{% extends 'base.html' %}
+{% block title %}{% if form.instance.pk %}Editar Produto{% else %}Novo Produto{% endif %} - Unigest{% endblock %}
+
 {% block content %}
-<h4>Cadastro de Produto</h4>
+<h2>{% if form.instance.pk %}Editar Produto{% else %}Novo Produto{% endif %}</h2>
+
 <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-success">Salvar</button>
-    <a href="{% url 'produto_list' %}" class="btn btn-secondary">Cancelar</a>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Salvar</button>
+  <a href="{% url 'estoque:produto-list' %}" class="btn btn-secondary">Cancelar</a>
 </form>
 {% endblock %}

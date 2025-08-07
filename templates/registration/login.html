@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Unigest{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-4">
+    <h3 class="mb-4 text-center">Login</h3>
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="id_username" class="form-label">Usuário</label>
+        <input type="text" name="username" autofocus maxlength="150" class="form-control" required id="id_username" />
+      </div>
+      <div class="mb-3">
+        <label for="id_password" class="form-label">Senha</label>
+        <input type="password" name="password" class="form-control" required id="id_password" />
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Entrar</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
